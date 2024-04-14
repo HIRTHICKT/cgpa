@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GPA Calculator</title>
+  <style>
+    /* Common CSS */
+    body {
+      background-image: linear-gradient(to bottom right, #ff6600, #ff8533);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: #333;
+    }
+    
+    h1 {
+      text-align: center;
+      font-size: 48px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #ff6600;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    form {
+      margin: 20px auto;
+      max-width: 400px;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #ff6600;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ff6600;
+      border-radius: 4px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #ff8533;
+    }
+    
+    .result {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 36px;
+      font-weight: bold;
+      color: #ff6600;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Additional CSS for more creative design */
+    
+    body {
+      background-image: radial-gradient(#ff8533, #ff6600);
+    }
+    
+    h1 {
+      font-size: 48px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      color: #ff8533;
+    }
+    
+    form {
+      padding: 60px;
+      background-color: #ff8533;
+    }
+    
+    label {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+    }
+    
+    input[type="number"],
+    select {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      background-color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    button {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      background-color: #ff6600;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #ff8533;
+    }
+    
+    .result {
+      font-size: 36px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <h1>GPA Calculator</h1>
+  
+  <form id="gpaForm">
+    <label for="numCourses">Enter the number of Courses:</label>
+    <input type="number" id="numCourses" min="1" step="1" value="1">
+    
+    <div id="courseInputs">
+      <div class="courseInput">
+        <label for="credit_0">Credits:</label>
+        <input type="number" class="creditInput" min="0" step="1" value="0">
+        
+        <label for="grade_0">Grade:</label>
+        <select class="gradeInput">
+          <option value="O">O</option>
+          <option value="A+">A+</option>
+          <option value="A">A</option>
+          <option value="B+">B+</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="F">F</option>
+        </select>
+      </div>
+    </div>
+    
+    <button type="button" id="addCourseButton">Add Course</button>
+    <button type="submit" id="calculateButton">Calculate GPA</button>
+  </form>
+  
+  <div id="resultContainer" class="result"></div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const addCourseButton = document.getElementById('addCourseButton');
+      const calculateButton = document.getElementById('calculateButton');
+      const courseInputsContainer = document.getElementById('courseInputs');
+      const resultContainer = document.getElementById('resultContainer');
+      
+      addCourseButton.addEventListener('click', function() {
+        const courseInput = document.createElement('div');
+        courseInput.classList.add('courseInput');
+        
+        const creditLabel = document.createElement('label');
+        creditLabel.textContent = 'Credits:';
+        const creditInput = document.createElement('input');
+        creditInput.type = 'number';
+        creditInput.classList.add('creditInput');
+        creditInput.min = '0';
+        creditInput.step = '1';
+        creditInput.value = '0';
+        
+        const gradeLabel = document.createElement('label');
+        gradeLabel.textContent = 'Grade:';
+        const gradeInput = document.createElement('select');
+        gradeInput.classList.add('gradeInput');
+        const gradeOptions = ['O', 'A+', 'A', 'B+', 'B', 'C', 'F'];
+        for (const option of gradeOptions) {
+          const gradeOption = document.createElement('option');
+          gradeOption.value = option;
+          gradeOption.textContent = option;
+          gradeInput.appendChild(gradeOption);
+        }
+        
+        courseInput.appendChild(creditLabel);
+        courseInput.appendChild(creditInput);
+        courseInput.appendChild(gradeLabel);
+        courseInput.appendChild(gradeInput);
+        
+        courseInputsContainer.appendChild(courseInput);
+      });
+      
+      document.getElementById('gpaForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const creditInputs = document.getElementsByClassName('creditInput');
+        const gradeInputs = document.getElementsByClassName('gradeInput');
+        
+        const credits = Array.from(creditInputs).map(input => parseInt(input.value));
+        const grades = Array.from(gradeInputs).map(input => input.value);
+        
+        const totalCredits = credits.reduce((sum, credit) => sum + credit, 0);
+        const weightedSum = credits.reduce((sum, credit, index) => sum + credit * gradeToPoints(grades[index]), 0);
+        
+        let gpa = 0;
+        if (totalCredits > 0) {
+          gpa = weightedSum / totalCredits;
+        }
+        
+        resultContainer.textContent = `Your GPA is ${gpa.toFixed(2)}`;
+      });
+      
+      function gradeToPoints(grade) {
+        const gradeMap = {
+          'O': 10.0, 'A+': 9.0, 'A': 8.0, 'B+': 7.0, 'B': 6.0, 'C': 5.5, 'F': 0.0
+        };
+        return gradeMap[grade.toUpperCase()] || 0.0;
+      }
+    });
+  </script>
+</body>
+</html>
